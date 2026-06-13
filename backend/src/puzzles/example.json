@@ -7,5 +7,13 @@
     "L....",
     "L....",
     "O...."
-  ]
+  ],
+  "clues": {
+    "across": [
+      { "num": 1, "row": 0, "col": 0, "len": 5, "clue": "A common greeting" }
+    ],
+    "down": [
+      { "num": 1, "row": 0, "col": 0, "len": 5, "clue": "Spells a greeting down the first column" }
+    ]
+  }
 }
