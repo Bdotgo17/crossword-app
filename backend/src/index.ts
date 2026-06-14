@@ -29,7 +29,10 @@ function getPuzzlesDir() {
 
 function loadPuzzles(): Puzzle[] {
   const puzzlesDir = getPuzzlesDir();
-  const files = fs.readdirSync(puzzlesDir).filter((file) => file.endsWith('.json')).sort();
+  const files = fs
+    .readdirSync(puzzlesDir)
+    .filter((file) => file.endsWith('.json'))
+    .sort();
 
   if (files.length === 0) {
     throw new Error('no puzzle files found');

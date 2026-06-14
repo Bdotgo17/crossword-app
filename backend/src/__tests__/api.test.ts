@@ -9,10 +9,13 @@ describe('GET /api/puzzles', () => {
     expect(Array.isArray(res.body)).toBe(true);
     expect(res.body.length).toBeGreaterThan(0);
     expect(res.body[0].width).toBeGreaterThan(0);
-    expect(res.body.every((puzzle: { width: number; height: number; grid: string[] }) => (
-      typeof puzzle.width === 'number'
-      && typeof puzzle.height === 'number'
-      && Array.isArray(puzzle.grid)
-    ))).toBe(true);
+    expect(
+      res.body.every(
+        (puzzle: { width: number; height: number; grid: string[] }) =>
+          typeof puzzle.width === 'number' &&
+          typeof puzzle.height === 'number' &&
+          Array.isArray(puzzle.grid)
+      )
+    ).toBe(true);
   });
 });

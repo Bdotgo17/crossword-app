@@ -2,9 +2,11 @@
   "name": "crossword-app",
   "private": true,
   "version": "0.1.0",
-  "workspaces": ["frontend","backend"],
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
-    "install": "npm install",
     "dev": "concurrently \"npm --workspace frontend run dev\" \"npm --workspace backend run dev\"",
     "start": "npm --workspace backend run start",
     "build": "npm --workspaces run build"
