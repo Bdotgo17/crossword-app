@@ -1,0 +1,17 @@
+{
+  "width": 3,
+  "height": 3,
+  "grid": [
+    "CAT",
+    "A..",
+    "T.."
+  ],
+  "clues": {
+    "across": [
+      { "num": 1, "row": 0, "col": 0, "len": 3, "clue": "Common pet that purrs" }
+    ],
+    "down": [
+      { "num": 1, "row": 0, "col": 0, "len": 3, "clue": "Animal in the first column" }
+    ]
+  }
+}
