@@ -4,6 +4,9 @@ import cors from 'cors';
 import fs from 'fs';
 
 type Puzzle = {
+  id?: string;
+  title?: string;
+  difficulty?: 'easy' | 'medium' | 'hard';
   width: number;
   height: number;
   grid: string[];

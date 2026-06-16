@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Crossword from './components/Crossword';
 
 type Puzzle = {
+  id?: string;
+  title?: string;
+  difficulty?: 'easy' | 'medium' | 'hard';
   width: number;
   height: number;
   grid: string[]; // rows, '.' is black
@@ -64,7 +67,9 @@ export default function App() {
               >
                 {puzzles.map((puzzle, index) => (
                   <option key={`puzzle-${index}`} value={index}>
-                    Puzzle {index + 1} ({puzzle.width}x{puzzle.height})
+                    {puzzle.title || `Puzzle ${index + 1}`}
+                    {puzzle.difficulty && ` (${puzzle.difficulty})`}
+                    {!puzzle.title && ` ${puzzle.width}x${puzzle.height}`}
                   </option>
                 ))}
               </select>
