@@ -32,15 +32,53 @@
   text-align: center;
   text-transform: uppercase;
   font-weight: 600;
+  border: 1px solid #b9bcc4;
+  background: #fff;
 }
 .cell.black {
   background: #333;
+}
+
+.cell.active-cell {
+  background: #eaf2ff;
+}
+
+.cell.current-cell {
+  background: #cfe0ff;
+  border-color: #3f6fd9;
 }
 
 .clues h3 {
   margin: 8px 0 4px;
 }
 .clues ul {
-  padding-left: 18px;
-  margin-top: 4px;
+  list-style: none;
+  padding-left: 0;
+  margin: 4px 0 10px;
+}
+
+.clues li {
+  border-radius: 6px;
+}
+
+.clues li.active-clue {
+  background: #eaf2ff;
+}
+
+.clue-button {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 6px 8px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.clue-button:hover {
+  background: #f5f8ff;
+}
+
+.clue-button:focus-visible {
+  outline: 2px solid #3f6fd9;
+  outline-offset: 1px;
 }
