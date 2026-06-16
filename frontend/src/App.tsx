@@ -9,7 +9,14 @@ type Puzzle = {
 
 export default function App() {
   const [puzzles, setPuzzles] = useState<Puzzle[]>([]);
-  const [selectedPuzzleIndex, setSelectedPuzzleIndex] = useState(0);
+  const [selectedPuzzleIndex, setSelectedPuzzleIndex] = useState(() => {
+    try {
+      const saved = localStorage.getItem('selectedPuzzleIndex');
+      return saved ? parseInt(saved, 10) : 0;
+    } catch {
+      return 0;
+    }
+  });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -19,7 +26,6 @@ export default function App() {
       .then((r) => r.json())
       .then((data: Puzzle[]) => {
         setPuzzles(Array.isArray(data) ? data : []);
-        setSelectedPuzzleIndex(0);
         setError(null);
       })
       .catch((e) => {
@@ -28,6 +34,14 @@ export default function App() {
       })
       .finally(() => setIsLoading(false));
   }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('selectedPuzzleIndex', String(selectedPuzzleIndex));
+    } catch {
+      // localStorage write failed, ignore
+    }
+  }, [selectedPuzzleIndex]);
 
   const selectedPuzzle = puzzles[selectedPuzzleIndex] ?? null;
 
@@ -58,7 +72,11 @@ export default function App() {
           )}
 
           {selectedPuzzle && (
-            <Crossword key={`puzzle-${selectedPuzzleIndex}`} puzzle={selectedPuzzle} />
+            <Crossword
+              key={`puzzle-${selectedPuzzleIndex}`}
+              puzzle={selectedPuzzle}
+              puzzleIndex={selectedPuzzleIndex}
+            />
           )}
         </>
       )}

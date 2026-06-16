@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 type Clue = { num: number; row: number; col: number; len: number; clue: string };
 type Puzzle = {
@@ -29,13 +29,36 @@ function clueCells(clue: Clue, direction: Direction): Position[] {
   }));
 }
 
-export default function Crossword({ puzzle }: { puzzle: Puzzle }) {
+function getGridStorageKey(puzzleIndex: number): string {
+  return `puzzle-grid-${puzzleIndex}`;
+}
+
+export default function Crossword({
+  puzzle,
+  puzzleIndex,
+}: {
+  puzzle: Puzzle;
+  puzzleIndex: number;
+}) {
   const { width, height, grid, clues } = puzzle;
 
-  // initialize cells as empty for letter positions, null for black
-  const [cells, setCells] = useState<string[][]>(() =>
-    grid.map((row) => row.split('').map((ch) => (ch === '.' ? '.' : '')))
-  );
+  // initialize cells from localStorage if available, otherwise empty
+  const [cells, setCells] = useState<string[][]>(() => {
+    try {
+      const storageKey = getGridStorageKey(puzzleIndex);
+      const saved = localStorage.getItem(storageKey);
+      if (saved) {
+        const parsed = JSON.parse(saved) as string[][];
+        // Validate it matches the current puzzle dimensions
+        if (parsed.length === height && parsed.every((row) => row.length === width)) {
+          return parsed;
+        }
+      }
+    } catch {
+      // localStorage read failed, use default
+    }
+    return grid.map((row) => row.split('').map((ch) => (ch === '.' ? '.' : '')));
+  });
   const [activeCell, setActiveCell] = useState<Position | null>(null);
   const [direction, setDirection] = useState<Direction>('across');
 
@@ -81,6 +104,16 @@ export default function Crossword({ puzzle }: { puzzle: Puzzle }) {
       return copy;
     });
   }
+
+  // Save grid state to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      const storageKey = getGridStorageKey(puzzleIndex);
+      localStorage.setItem(storageKey, JSON.stringify(cells));
+    } catch {
+      // localStorage write failed, ignore
+    }
+  }, [cells, puzzleIndex]);
 
   function check() {
     const wrong: [number, number][] = [];
