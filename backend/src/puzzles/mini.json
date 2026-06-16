@@ -1,6 +1,8 @@
-{  "id": "puzzle-2",
+{
+  "id": "puzzle-2",
   "title": "Feline Friend",
-  "difficulty": "easy",  "width": 3,
+  "difficulty": "easy",
+  "width": 3,
   "height": 3,
   "grid": ["CAT", "A..", "T.."],
   "clues": {

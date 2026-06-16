@@ -1,17 +1,12 @@
 {
+  "id": "puzzle-1",
+  "title": "Hello World",
+  "difficulty": "easy",
   "width": 5,
   "height": 5,
-  "grid": [
-    "HELLO",
-    "E....",
-    "L....",
-    "L....",
-    "O...."
-  ],
+  "grid": ["HELLO", "E....", "L....", "L....", "O...."],
   "clues": {
-    "across": [
-      { "num": 1, "row": 0, "col": 0, "len": 5, "clue": "A common greeting" }
-    ],
+    "across": [{ "num": 1, "row": 0, "col": 0, "len": 5, "clue": "A common greeting" }],
     "down": [
       { "num": 1, "row": 0, "col": 0, "len": 5, "clue": "Spells a greeting down the first column" }
     ]
