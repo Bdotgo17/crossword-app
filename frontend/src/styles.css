@@ -82,3 +82,14 @@
   outline: 2px solid #3f6fd9;
   outline-offset: 1px;
 }
+
+.puzzle-status {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  color: #4c5568;
+}
+
+.puzzle-status.solved {
+  color: #0c6b37;
+  font-weight: 700;
+}

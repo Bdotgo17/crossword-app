@@ -61,6 +61,7 @@ export default function Crossword({
   });
   const [activeCell, setActiveCell] = useState<Position | null>(null);
   const [direction, setDirection] = useState<Direction>('across');
+  const [isSolved, setIsSolved] = useState(false);
 
   const acrossClues = clues?.across ?? [];
   const downClues = clues?.down ?? [];
@@ -115,7 +116,28 @@ export default function Crossword({
     }
   }, [cells, puzzleIndex]);
 
+  // Mark puzzle solved only when every fillable cell exactly matches the answer.
+  useEffect(() => {
+    let solved = true;
+    for (let r = 0; r < height; r++) {
+      for (let c = 0; c < width; c++) {
+        if (grid[r][c] === '.') continue;
+        if (!cells[r][c] || cells[r][c] !== grid[r][c]) {
+          solved = false;
+          break;
+        }
+      }
+      if (!solved) break;
+    }
+    setIsSolved(solved);
+  }, [cells, grid, height, width]);
+
   function check() {
+    if (isSolved) {
+      alert('Puzzle solved!');
+      return;
+    }
+
     const wrong: [number, number][] = [];
     for (let r = 0; r < height; r++) {
       for (let c = 0; c < width; c++) {
@@ -257,6 +279,9 @@ export default function Crossword({
           )}
         </div>
         <div style={{ marginTop: 12 }}>
+          <div className={`puzzle-status ${isSolved ? 'solved' : ''}`}>
+            {isSolved ? 'You solved this puzzle.' : 'Keep going.'}
+          </div>
           <button onClick={check}>Check</button>
           <button onClick={reveal} style={{ marginLeft: 8 }}>
             Reveal
