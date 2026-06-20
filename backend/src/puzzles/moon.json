@@ -1,0 +1,14 @@
+{
+  "id": "puzzle-3",
+  "title": "Moon",
+  "difficulty": "easy",
+  "width": 4,
+  "height": 4,
+  "grid": ["MOON", "O...", "O...", "N..."],
+  "clues": {
+    "across": [{ "num": 1, "row": 0, "col": 0, "len": 4, "clue": "Earth's natural satellite" }],
+    "down": [
+      { "num": 1, "row": 0, "col": 0, "len": 4, "clue": "Night sky object in the first column" }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "puzzle-5",
+  "title": "Bird",
+  "difficulty": "easy",
+  "width": 4,
+  "height": 4,
+  "grid": ["BIRD", "I...", "R...", "D..."],
+  "clues": {
+    "across": [
+      { "num": 1, "row": 0, "col": 0, "len": 4, "clue": "Animal with wings and feathers" }
+    ],
+    "down": [
+      { "num": 1, "row": 0, "col": 0, "len": 4, "clue": "Animal spelled down the first column" }
+    ]
+  }
+}

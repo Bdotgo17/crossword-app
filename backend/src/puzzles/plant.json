@@ -1,0 +1,16 @@
+{
+  "id": "puzzle-4",
+  "title": "Plant",
+  "difficulty": "easy",
+  "width": 5,
+  "height": 5,
+  "grid": ["PLANT", "L....", "A....", "N....", "T...."],
+  "clues": {
+    "across": [
+      { "num": 1, "row": 0, "col": 0, "len": 5, "clue": "A living thing that grows in soil" }
+    ],
+    "down": [
+      { "num": 1, "row": 0, "col": 0, "len": 5, "clue": "Word formed down the first column" }
+    ]
+  }
+}
