@@ -226,7 +226,7 @@ export default function Crossword({
   }
 
   return (
-    <div style={{ display: 'flex', gap: 24 }}>
+    <div style={{ display: 'flex', gap: 24, justifyContent: 'center', width: '100%' }}>
       <div>
         <div className="grid" style={{ gridTemplateColumns: `repeat(${width}, 2.2rem)` }}>
           {cells.map((row, r) =>
