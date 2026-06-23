@@ -1,16 +1,15 @@
 {
-  "id": "puzzle-5",
-  "title": "Bird",
+  "id": "three-word-puzzle",
+  "title": "Three Word Puzzle",
   "difficulty": "easy",
-  "width": 4,
-  "height": 4,
-  "grid": ["BIRD", "I...", "R...", "D..."],
+  "width": 5,
+  "height": 3,
+  "grid": ["SUN..", "OWL..", "CAT.."],
   "clues": {
     "across": [
-      { "num": 1, "row": 0, "col": 0, "len": 4, "clue": "Animal with wings and feathers" }
-    ],
-    "down": [
-      { "num": 1, "row": 0, "col": 0, "len": 4, "clue": "Animal spelled down the first column" }
+      { "num": 1, "row": 0, "col": 0, "len": 3, "clue": "Daytime star" },
+      { "num": 2, "row": 1, "col": 0, "len": 3, "clue": "Nocturnal bird" },
+      { "num": 3, "row": 2, "col": 0, "len": 3, "clue": "Common house pet" }
     ]
   }
 }
