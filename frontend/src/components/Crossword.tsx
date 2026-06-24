@@ -83,6 +83,21 @@ export default function Crossword({
     return new Set(clueCells(activeClue, direction).map((cell) => `${cell.row}-${cell.col}`));
   }, [activeClue, direction]);
 
+  const clueNumbersByCell = useMemo(() => {
+    const numbers = new Map<string, number>();
+    const register = (clue: Clue) => {
+      const key = `${clue.row}-${clue.col}`;
+      const existing = numbers.get(key);
+      if (existing === undefined || clue.num < existing) {
+        numbers.set(key, clue.num);
+      }
+    };
+
+    acrossClues.forEach(register);
+    downClues.forEach(register);
+    return numbers;
+  }, [acrossClues, downClues]);
+
   function focusCell(row: number, col: number) {
     inputsRef.current[row]?.[col]?.focus();
     setActiveCell({ row, col });
@@ -225,8 +240,16 @@ export default function Crossword({
     return !!activeCell && activeCell.row === row && activeCell.col === col;
   }
 
+  const activeClueText = activeClue
+    ? `${direction === 'across' ? 'Across' : 'Down'} ${activeClue.num}: ${activeClue.clue}`
+    : 'Select a cell to start solving.';
+
+  const activeClueMeta = activeClue
+    ? `${activeClue.len} letters • Row ${activeClue.row + 1}, Col ${activeClue.col + 1}`
+    : 'Tip: press arrow keys to switch direction and move.';
+
   return (
-    <div style={{ display: 'flex', gap: 24, justifyContent: 'center', width: '100%' }}>
+    <div className="crossword-layout">
       <div>
         <div className="grid" style={{ gridTemplateColumns: `repeat(${width}, 2.2rem)` }}>
           {cells.map((row, r) =>
@@ -242,38 +265,43 @@ export default function Crossword({
                 .filter(Boolean)
                 .join(' ');
 
+              const clueNumber = clueNumbersByCell.get(`${r}-${c}`);
+
               return (
-                <input
-                  key={`${r}-${c}`}
-                  ref={(el) => {
-                    inputsRef.current[r] = inputsRef.current[r] || [];
-                    if (el) inputsRef.current[r][c] = el;
-                  }}
-                  className={classNames}
-                  maxLength={1}
-                  value={cells[r][c]}
-                  onClick={() => activateFromCell(r, c)}
-                  onFocus={() => activateFromCell(r, c)}
-                  onChange={(e) => onCellInput(r, c, e.target.value)}
-                  onKeyDown={(e) => {
-                    const key = e.key;
-                    if (key.startsWith('Arrow')) {
-                      e.preventDefault();
-                      onArrow(r, c, key);
-                      return;
-                    }
-                    if (key === 'Backspace') {
-                      e.preventDefault();
-                      onBackspace(r, c);
-                      return;
-                    }
-                    if (key === 'Enter') {
-                      e.preventDefault();
-                      const next = moveInDirection(r, c, 1, direction);
-                      if (next) focusCell(next.row, next.col);
-                    }
-                  }}
-                />
+                <div key={`${r}-${c}`} className={classNames}>
+                  {clueNumber !== undefined && <span className="clue-number">{clueNumber}</span>}
+                  <input
+                    ref={(el) => {
+                      inputsRef.current[r] = inputsRef.current[r] || [];
+                      if (el) inputsRef.current[r][c] = el;
+                    }}
+                    className="cell-input"
+                    maxLength={1}
+                    value={cells[r][c]}
+                    aria-label={`Row ${r + 1}, column ${c + 1}`}
+                    onClick={() => activateFromCell(r, c)}
+                    onFocus={() => activateFromCell(r, c)}
+                    onChange={(e) => onCellInput(r, c, e.target.value)}
+                    onKeyDown={(e) => {
+                      const key = e.key;
+                      if (key.startsWith('Arrow')) {
+                        e.preventDefault();
+                        onArrow(r, c, key);
+                        return;
+                      }
+                      if (key === 'Backspace') {
+                        e.preventDefault();
+                        onBackspace(r, c);
+                        return;
+                      }
+                      if (key === 'Enter') {
+                        e.preventDefault();
+                        const next = moveInDirection(r, c, 1, direction);
+                        if (next) focusCell(next.row, next.col);
+                      }
+                    }}
+                  />
+                </div>
               );
             })
           )}
@@ -290,6 +318,12 @@ export default function Crossword({
       </div>
 
       <div className="clues" style={{ minWidth: 260 }}>
+        <div className="current-clue-panel">
+          <div className="current-clue-title">Current clue</div>
+          <div className="current-clue-text">{activeClueText}</div>
+          <div className="current-clue-meta">{activeClueMeta}</div>
+        </div>
+
         <h3>Across</h3>
         <ul>
           {clues?.across?.map((c) => (
