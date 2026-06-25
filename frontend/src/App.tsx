@@ -67,9 +67,9 @@ export default function App() {
               >
                 {puzzles.map((puzzle, index) => (
                   <option key={`puzzle-${index}`} value={index}>
-                    {puzzle.title || `Puzzle ${index + 1}`}
+                    {`Puzzle ${index + 1}`}
                     {puzzle.difficulty && ` (${puzzle.difficulty})`}
-                    {!puzzle.title && ` ${puzzle.width}x${puzzle.height}`}
+                    {` ${puzzle.width}x${puzzle.height}`}
                   </option>
                 ))}
               </select>
